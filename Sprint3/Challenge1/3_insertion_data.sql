@@ -43,10 +43,10 @@ INSERT INTO campus (location, name, id_admin)
 
 INSERT INTO staff (id_staff, id_user, created_by_admin)
 	VALUES 
-		('1005869667', 4, '201744936'),
-		('67463956', 6, '201744936'),
-		('82475835', 10, '201544936'),
-		('26373945', 11, '202244936');
+		('1005869667', 4, '39485435'),
+		('67463956', 6, '564563433'),
+		('82475835', 10, '564563433'),
+		('26373945', 11, '546767575');
 
 INSERT INTO student (id_student, id_user, created_by_staff)
 	VALUES
@@ -59,11 +59,11 @@ INSERT INTO course (id_course, status, number_credits, name, id_staff, created_b
 	VALUES
 		('111023C', TRUE, 2, 'Matematicas', '1005869667', '39485435'),
 		('111048M', TRUE, 1, 'Algebra', '1005869667', '564563433'),
-		('111051M ', FALSE, 3, 'CalculoII', '67463956', '39485435')
-		('750006C', TRUE, 3, 'Bases de Datos', '67463956', '564563433')
-		('761130M', TRUE, 3, 'Estadistica', '67463956', '39485435')
-		('750001C ', TRUE, 3, 'Sistemas Operativos', '26373945', '564563433')
-		('106012C', FALSE, 2, 'FisicaI', '26373945', '564563433')
+		('111051M', FALSE, 3, 'CalculoII', '67463956', '39485435'),
+		('750006C', TRUE, 3, 'Bases de Datos', '67463956', '564563433'),
+		('761130M', TRUE, 3, 'Estadistica', '67463956', '39485435'),
+		('750001C', TRUE, 3, 'Sistemas Operativos', '26373945', '564563433'),
+		('106012C', FALSE, 2, 'FisicaI', '26373945', '564563433');
 
 INSERT INTO enrolls(id_course, id_student, id_staff, date)
 	VALUES
@@ -121,7 +121,7 @@ INSERT INTO question (description, type, id_option_list)
 		('Enunciado8', 'close', 1),
 		('Enunciado9', 'close', 2),
 		('Enunciado10', 'close', 3),
-		('Enunciado12', 'open', NULL);
+		('Enunciado11', 'open', NULL);
 
 INSERT INTO option (literal, id_question, description)
 	VALUES 
@@ -139,21 +139,22 @@ INSERT INTO option (literal, id_question, description)
 		('b',8, 'Opcion12'),
 		('b',9, 'Opcion13'),
 		('b',10, 'Opcion14'),
-		('a',9, 'Opcion16');
+		('a',9, 'Opcion15');
+
 
 INSERT INTO answer (date, text, option_selected, id_student, id_question)
 	VALUES
 		('2022-12-16 12:21:13',NULL, 1, '201744936',4),
 		('2021-12-16 12:21:13',NULL, 8, '202244936',6),
 		('2011-02-16 20:38:40',NULL, 12, '201544936', 8),
-		('2022-02-16 20:38:40',NULL, 16, '202144936',9 ),
+		('2022-02-16 20:38:40',NULL, 15, '202144936',9 ),
 		('2022-02-16 20:38:40',NULL, 14, '201744936',10),
 		('2022-02-16 20:38:40',NULL, 11, '202144936',7),
 		('2022-02-16 20:38:40','Answer3', NULL, '201744936',1),
 		('2022-02-16 20:38:40','Answer4', NULL, '201544936',2),
 		('2022-02-16 20:38:40','Answer5', NULL, '201744936',3),
 		('2022-02-16 20:38:40','Answer6', NULL, '202144936',5),
-		('2022-02-16 20:38:40','Answer7', NULL, '202244936',12);
+		('2022-02-16 20:38:40','Answer7', NULL, '202244936',11);
 
 INSERT INTO question_test(id_question, id_test)
 	VALUES
@@ -167,12 +168,8 @@ INSERT INTO question_test(id_question, id_test)
 		(2,5), --open
 		(3,1), --open
 		(5,2), --open
-		(12,7); --open
+		(11,7); --open
 		
-
-
-
-
 -- SELECT FOR CHECK THE CONTENT OF EACH TABLE TESTING
 SELECT * from "user";
 SELECT * from "admin";
