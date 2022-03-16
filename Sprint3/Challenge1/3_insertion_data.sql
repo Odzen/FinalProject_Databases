@@ -66,29 +66,109 @@ INSERT INTO course (id_course, status, number_credits, name, id_staff, created_b
 		('106012C', FALSE, 2, 'FisicaI', '26373945', '564563433')
 
 INSERT INTO enrolls(id_course, id_student, id_staff, date)
-	VALUES('111023C', '201744936', '1005869667', '2022-02-12'),
-		('761130M', '201744936', '67463956', '2022-02-12'),
-		('111023C', '201744936', '1005869667', '2018-02-12'),
+	VALUES
+		('111023C', '201744936', '1005869667', '2022-02-12'),
+		('761130M', '202244936', '67463956', '2022-02-12'),
+		('111023C', '202144936', '1005869667', '2018-02-12'),
 		('111048M', '201744936', '1005869667', '2017-02-12'),
-		('111048M', '201744936', '1005869667', '2016-02-12'),
-		('111048M', '201744936', '1005869667', '2022-02-12'),
-		('750006C', '201744936', '67463956', '2020-02-12'),
-		('106012C', '201744936', '26373945', '2022-02-12'),
+		('111048M', '201544936', '1005869667', '2016-02-12'),
+		('111048M', '202144936', '1005869667', '2022-02-12'),
+		('750006C', '201544936', '67463956', '2020-02-12'),
+		('106012C', '202144936', '26373945', '2022-02-12'),
 		('750001C', '201744936', '26373945', '2022-02-12');
 	
-INSERT INTO test
+INSERT INTO test (name, status, description, release_date, created_by_staff,id_course)
+	VALUES
+		('attendance1', TRUE, NULL, '2022-02-12', '1005869667',  '111023C'),
+		('attendance2', FALSE, NULL, '2022-02-12', '1005869667',  '111048M'),
+		('attendance3', TRUE, NULL, '2022-02-12', '67463956',  '111051M'),
+		('attendance4', FALSE, NULL, '2022-02-12', '67463956',  '111051M'),
+		('attendance5', TRUE, NULL, '2022-02-12', '67463956',  '750006C'),
+		('attendance6', FALSE, NULL, '2022-02-12', '67463956',  '750006C'),
+		('attendance7', TRUE, NULL, '2022-02-12', '67463956',  '761130M'),
+		('attendance8', FALSE, NULL, '2022-02-12', '26373945',  '750001C');
+	
+INSERT INTO option_list (name)
+	VALUES
+		('option_list_1'),
+		('option_list_2'),
+		('option_list_3'),
+		('option_list_4'),
+		('option_list_5'),
+		('option_list_6'),
+		('option_list_7');
 
---INSERT INTO option_list
+INSERT INTO attendance (id_test, id_course, id_student, date)
+	VALUES 
+		(1, '111023C', '201744936', '2022-02-12'),
+		(7, '761130M', '202244936', '2022-03-12'),
+		(2, '111048M', '201544936', '2022-04-12'),
+		(2, '111048M', '202144936', '2022-02-12'),
+		(2, '111048M', '201744936', '2022-02-12'),
+		(5, '750006C', '201544936', '2022-01-12'),
+		(6, '750001C', '201744936', '2022-02-12');
+	
+	
+INSERT INTO question (description, type, id_option_list)
+	VALUES
+		('Enunciado1', 'open', NULL),
+		('Enunciado2', 'open', NULL),
+		('Enunciado3', 'open', NULL),
+		('Enunciado4', 'close', 4),
+		('Enunciado5', 'open', NULL),
+		('Enunciado6', 'close', 6),
+		('Enunciado7', 'close', 7),
+		('Enunciado8', 'close', 1),
+		('Enunciado9', 'close', 2),
+		('Enunciado10', 'close', 3),
+		('Enunciado12', 'open', NULL);
 
---INSERT INTO attendance
+INSERT INTO option (literal, id_question, description)
+	VALUES 
+		('a',4,'Opcion1'),
+		('b',4,'Opcion2'),
+		('c',4,'Opcion3'),
+		('d',4, 'Opcion4'),
+		('a',6, 'Opcion5'),
+		('b',6, 'Opcion6'),
+		('c',6, 'Opcion7'),
+		('d',6, 'Opcion8'),
+		('a',7, 'Opcion9'),
+		('a',8, 'Opcion10'),
+		('b',7, 'Opcion11'),
+		('b',8, 'Opcion12'),
+		('b',9, 'Opcion13'),
+		('b',10, 'Opcion14'),
+		('a',9, 'Opcion16');
 
---INSERT INTO question
+INSERT INTO answer (date, text, option_selected, id_student, id_question)
+	VALUES
+		('2022-12-16 12:21:13',NULL, 1, '201744936',4),
+		('2021-12-16 12:21:13',NULL, 8, '202244936',6),
+		('2011-02-16 20:38:40',NULL, 12, '201544936', 8),
+		('2022-02-16 20:38:40',NULL, 16, '202144936',9 ),
+		('2022-02-16 20:38:40',NULL, 14, '201744936',10),
+		('2022-02-16 20:38:40',NULL, 11, '202144936',7),
+		('2022-02-16 20:38:40','Answer3', NULL, '201744936',1),
+		('2022-02-16 20:38:40','Answer4', NULL, '201544936',2),
+		('2022-02-16 20:38:40','Answer5', NULL, '201744936',3),
+		('2022-02-16 20:38:40','Answer6', NULL, '202144936',5),
+		('2022-02-16 20:38:40','Answer7', NULL, '202244936',12);
 
---INSERT INTO option
-
---INSERT INTO answer
-
---INSERT INTO question_test
+INSERT INTO question_test(id_question, id_test)
+	VALUES
+		(4,1), --close
+		(6,7), --close
+		(8,2), --close
+		(9,2), --close
+		(7,2), --close
+		(10,1), --close
+		(1,6), --open 
+		(2,5), --open
+		(3,1), --open
+		(5,2), --open
+		(12,7); --open
+		
 
 
 
