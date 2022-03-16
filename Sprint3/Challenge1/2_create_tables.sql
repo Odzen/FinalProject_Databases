@@ -40,10 +40,12 @@ CREATE TABLE admin(
   PRIMARY KEY (id_admin),
   CONSTRAINT "FK_admin.created_by_admin"
     FOREIGN KEY (created_by_admin)
-      REFERENCES admin(id_admin),
+      REFERENCES admin(id_admin)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_staff.id_user"
     FOREIGN KEY (id_user)
 	  REFERENCES "user"(id_user)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE campus(
@@ -55,6 +57,7 @@ CREATE TABLE campus(
   CONSTRAINT "FK_campus.id_admin"
     FOREIGN KEY (id_admin)
       REFERENCES admin(id_admin)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE staff (
@@ -64,10 +67,12 @@ CREATE TABLE staff (
   PRIMARY KEY (id_staff),
   CONSTRAINT "FK_staff.created_by_admin"
     FOREIGN KEY (created_by_admin)
-      REFERENCES admin(id_admin),
+      REFERENCES admin(id_admin)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_staff.id_user"
     FOREIGN KEY (id_user)
 	  REFERENCES "user"(id_user)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE student (
@@ -77,10 +82,12 @@ CREATE TABLE student (
   PRIMARY KEY (id_student),
   CONSTRAINT "FK_student.created_by_staff"
     FOREIGN KEY (created_by_staff)
-      REFERENCES staff(id_staff),
+      REFERENCES staff(id_staff)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_staff.id_user"
     FOREIGN KEY (id_user)
 	  REFERENCES "user"(id_user)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE course (
@@ -93,10 +100,12 @@ CREATE TABLE course (
   PRIMARY KEY (id_course),
   CONSTRAINT "FK_course.created_by_admin"
     FOREIGN KEY (created_by_admin)
-      REFERENCES admin(id_admin),
+      REFERENCES admin(id_admin)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_course.id_staff"
     FOREIGN KEY (id_staff)
       REFERENCES staff(id_staff)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE enrolls (
@@ -107,13 +116,16 @@ CREATE TABLE enrolls (
   PRIMARY KEY (id_course, id_student, id_staff),
   CONSTRAINT "FK_enrolls.id_student"
     FOREIGN KEY (id_student)
-      REFERENCES student(id_student),
+      REFERENCES student(id_student)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_enrolls.id_course"
     FOREIGN KEY (id_course)
-      REFERENCES course(id_course),
+      REFERENCES course(id_course)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_enrolls.id_staff"
     FOREIGN KEY (id_staff)
       REFERENCES staff(id_staff)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE test (
@@ -127,10 +139,12 @@ CREATE TABLE test (
   PRIMARY KEY (id_test),
   CONSTRAINT "FK_test.created_by_staff"
     FOREIGN KEY (created_by_staff)
-      REFERENCES staff(id_staff),
+      REFERENCES staff(id_staff)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_test.id_course"
     FOREIGN KEY (id_course)
       REFERENCES course(id_course)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE option_list (
@@ -147,13 +161,16 @@ CREATE TABLE attendance (
   PRIMARY KEY (id_test, id_course, id_student),
   CONSTRAINT "FK_attendance.id_student"
     FOREIGN KEY (id_student)
-      REFERENCES student(id_student),
+      REFERENCES student(id_student)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_attendance.id_course"
     FOREIGN KEY (id_course)
-      REFERENCES course(id_course),
+      REFERENCES course(id_course)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_attendance.id_test"
     FOREIGN KEY (id_test)
       REFERENCES test(id_test)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE question (
@@ -164,16 +181,20 @@ CREATE TABLE question (
   PRIMARY KEY (id_question),
   CONSTRAINT "FK_question.id_option_list"
     FOREIGN KEY (id_option_list)
-      REFERENCES option_list(id_option_list) ON DELETE SET NULL
+      REFERENCES option_list(id_option_list) 
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE option (
   id_option SERIAL,
-  id_option_list INT,
+  literal VARCHAR(1),
+  id_question INT,
+  description VARCHAR(30) NOT NULL,
   PRIMARY KEY (id_option),
-  CONSTRAINT "FK_option.id_option_list"
-    FOREIGN KEY (id_option_list)
-      REFERENCES option_list(id_option_list)
+  CONSTRAINT "FK_option.id_question"
+    FOREIGN KEY (id_question)
+      REFERENCES question(id_question)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE answer (
@@ -186,13 +207,16 @@ CREATE TABLE answer (
   PRIMARY KEY (id_answer),
   CONSTRAINT "FK_answer.option_selected"
     FOREIGN KEY (option_selected)
-      REFERENCES option(id_option),
+      REFERENCES option(id_option)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_answer.id_student"
     FOREIGN KEY (id_student)
-      REFERENCES student(id_student),
+      REFERENCES student(id_student)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_answer.id_question"
     FOREIGN KEY (id_question)
       REFERENCES question(id_question)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE question_test (
@@ -201,10 +225,12 @@ CREATE TABLE question_test (
   PRIMARY KEY (id_question, id_test),
   CONSTRAINT "FK_question_test.id_question"
     FOREIGN KEY (id_question)
-      REFERENCES question(id_question),
+      REFERENCES question(id_question)
+		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_question_test.id_test"
     FOREIGN KEY (id_test)
       REFERENCES test(id_test)
+		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
