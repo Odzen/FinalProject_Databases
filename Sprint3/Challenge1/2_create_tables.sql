@@ -17,23 +17,23 @@ DROP TABLE IF EXISTS question_test CASCADE;
 
 --Table creation
 
-CREATE TABLE "user" (
+CREATE TABLE "user"(
   id_user SERIAL,
-  password VARCHAR(30),
-  email VARCHAR(30),
-  first_name VARCHAR(30),
-  last_name VARCHAR(30),
-  modified DATE,
-  last_ip INET,
-  last_login DATE,
-  avatar TEXT,
+  password VARCHAR(30) NOT NULL,
+  email VARCHAR(30) NOT NULL,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  modified DATE NOT NULL,
+  last_ip INET NOT NULL,
+  last_login DATE NOT NULL,
+  avatar bytea,
   description TEXT,
-  joined DATE,
-  user_type VARCHAR(30),
+  joined DATE NOT NULL,
+  user_type VARCHAR(30) NOT NULL,
   PRIMARY KEY (id_user)
 );
 
-CREATE TABLE admin (
+CREATE TABLE admin(
   id_admin VARCHAR(30),
   id_user INT,
   created_by_admin VARCHAR(30),
@@ -46,10 +46,10 @@ CREATE TABLE admin (
 	  REFERENCES "user"(id_user)
 );
 
-CREATE TABLE campus (
+CREATE TABLE campus(
   id_campus SERIAL,
-  location VARCHAR(30),
-  name VARCHAR(30),
+  location VARCHAR(30) NOT NULL,
+  name VARCHAR(30) NOT NULL,
   id_admin VARCHAR(30),
   PRIMARY KEY (id_campus),
   CONSTRAINT "FK_campus.id_admin"
@@ -85,9 +85,9 @@ CREATE TABLE student (
 
 CREATE TABLE course (
   id_course VARCHAR(30),
-  status BOOLEAN,
-  number_credits INT,
-  name VARCHAR(30),
+  status BOOLEAN NOT NULL,
+  number_credits INT NOT NULL,
+  name VARCHAR(30) NOT NULL,
   id_staff VARCHAR(30),
   created_by_admin VARCHAR(30),
   PRIMARY KEY (id_course),
@@ -103,7 +103,7 @@ CREATE TABLE enrolls (
   id_course VARCHAR(30),
   id_student VARCHAR(30),
   id_staff VARCHAR(30),
-  date DATE,
+  date DATE NOT NULL,
   PRIMARY KEY (id_course, id_student, id_staff),
   CONSTRAINT "FK_enrolls.id_student"
     FOREIGN KEY (id_student)
@@ -118,10 +118,10 @@ CREATE TABLE enrolls (
 
 CREATE TABLE test (
   id_test SERIAL,
-  name VARCHAR(30),
-  status BOOLEAN,
+  name VARCHAR(30) NOT NULL,
+  status BOOLEAN NOT NULL,
   description TEXT,
-  release_date DATE,
+  release_date DATE NOT NULL,
   created_by_staff VARCHAR(30),
   id_course VARCHAR(30),
   PRIMARY KEY (id_test),
@@ -135,7 +135,7 @@ CREATE TABLE test (
 
 CREATE TABLE option_list (
   id_option_list SERIAL,
-  name VARCHAR(30),
+  name VARCHAR(30) NOT NULL,
   PRIMARY KEY (id_option_list)
 );
 
@@ -143,7 +143,7 @@ CREATE TABLE attendance (
   id_test INT,
   id_course VARCHAR(30),
   id_student VARCHAR(30),
-  date DATE,
+  date DATE NOT NULL,
   PRIMARY KEY (id_test, id_course, id_student),
   CONSTRAINT "FK_attendance.id_student"
     FOREIGN KEY (id_student)
@@ -159,7 +159,7 @@ CREATE TABLE attendance (
 CREATE TABLE question (
   id_question SERIAL,
   description TEXT,
-  type VARCHAR(30),
+  type VARCHAR(30) NOT NULL,
   id_option_list INT,
   PRIMARY KEY (id_question),
   CONSTRAINT "FK_question.id_option_list"
@@ -178,7 +178,7 @@ CREATE TABLE option (
 
 CREATE TABLE answer (
   id_answer SERIAL,
-  date DATE DEFAULT CAST(NOW() AS DATE),
+  date TIMESTAMP,
   text TEXT,
   option_selected INT,
   id_student VARCHAR(30),
