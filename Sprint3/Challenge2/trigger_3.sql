@@ -3,8 +3,7 @@
 -- No dejar responder un test para marcar asistencia a un curso que esta inactivo, esto lo revisamos con el campo
 -- status en la relacion 'test'
 
-
--- DROP TRIGGER IF EXISTS attendance_check ON attendance;
+DROP TRIGGER IF EXISTS attendance_check ON attendance;
 
 CREATE OR REPLACE FUNCTION attendance_check() 
     RETURNS TRIGGER AS $attendance_check$
@@ -50,4 +49,4 @@ CREATE TRIGGER attendance_check BEFORE INSERT OR UPDATE
 -- 		(2,'201744936', '2022-03-12');
 
 	
---SELECT * FROM answer;
+--SELECT * FROM attendance;
