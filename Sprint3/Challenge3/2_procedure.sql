@@ -1,6 +1,7 @@
 
-CREATE OR REPLACE FUNCTION insert_user(id VARCHAR(30), creator VARCHAR(30))
-RETURNS VOID as $BODY$
+CREATE OR REPLACE PROCEDURE insert_user(id VARCHAR(30), creator VARCHAR(30))
+LANGUAGE plpgsql
+as $BODY$
 DECLARE 
 	adm VARCHAR(30):= 'admin';
 	staf VARCHAR(30):='staff';
@@ -18,11 +19,10 @@ BEGIN
 			END IF;
 		END;
 	ELSE
-		RAISE EXCEPTION 'El admin % no existe' "@creator";
+		RAISE EXCEPTION 'El admin % no existe', "@creator";
 	END IF;
 END;
 $BODY$
-LANGUAGE plpgsql
 
 
 
