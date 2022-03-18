@@ -6,10 +6,11 @@ ALTER SEQUENCE test_id_test_seq RESTART;
 ALTER SEQUENCE option_list_id_option_list_seq RESTART;
 ALTER SEQUENCE question_id_question_seq RESTART;
 ALTER SEQUENCE option_id_option_seq RESTART;
-ALTER SEQUENCE answer_id_answer_seq RESTART;
+ALTER SEQUENCE answer_open_id_answer_open_seq RESTART;
+ALTER SEQUENCE answer_close_id_answer_close_seq RESTART;
 
 -- DELETE RECORDS FOR TESTING
-TRUNCATE "user",admin,campus,staff, student,course,enrolls,test,option_list,attendance,question,option,answer,question_test  CASCADE;
+TRUNCATE "user",admin,campus,staff, student,course,enrolls,test,option_list,attendance,question,option,answer_close, answer_open,question_test  CASCADE;
 
 -- Inserting Dummy Values into tables
 INSERT INTO "user" (password,email,first_name,last_name,modified,last_ip,last_login,avatar,description,joined,user_type)
@@ -65,28 +66,28 @@ INSERT INTO course (id_course, status, number_credits, name, id_staff, created_b
 		('750001C', TRUE, 3, 'Sistemas Operativos', '26373945', '564563433'),
 		('106012C', FALSE, 2, 'FisicaI', '26373945', '564563433');
 
-INSERT INTO enrolls(id_course, id_student, id_staff, date)
+INSERT INTO enrolls(id_course, id_student, date)
 	VALUES
-		('111023C', '201744936', '1005869667', '2022-02-12'),
-		('761130M', '202244936', '67463956', '2022-02-12'),
-		('111023C', '202144936', '1005869667', '2018-02-12'),
-		('111048M', '201744936', '1005869667', '2017-02-12'),
-		('111048M', '201544936', '1005869667', '2016-02-12'),
-		('111048M', '202144936', '1005869667', '2022-02-12'),
-		('750006C', '201544936', '67463956', '2020-02-12'),
-		('106012C', '202144936', '26373945', '2022-02-12'),
-		('750001C', '201744936', '26373945', '2022-02-12');
+		('111023C', '201744936', '2022-02-12'),
+		('761130M', '202244936', '2022-02-12'),
+		('111023C', '202144936', '2018-02-12'),
+		('111048M', '201744936', '2017-02-12'),
+		('111048M', '201544936', '2016-02-12'),
+		('111048M', '202144936', '2022-02-12'),
+		('750006C', '201544936', '2020-02-12'),
+		('106012C', '202144936', '2022-02-12'),
+		('750001C', '201744936', '2022-02-12');
 	
-INSERT INTO test (name, status, description, release_date, created_by_staff,id_course)
+INSERT INTO test (name, status, description, release_date,id_course)
 	VALUES
-		('attendance1', TRUE, NULL, '2022-02-12', '1005869667',  '111023C'),
-		('attendance2', FALSE, NULL, '2022-02-12', '1005869667',  '111048M'),
-		('attendance3', TRUE, NULL, '2022-02-12', '67463956',  '111051M'),
-		('attendance4', FALSE, NULL, '2022-02-12', '67463956',  '111051M'),
-		('attendance5', TRUE, NULL, '2022-02-12', '67463956',  '750006C'),
-		('attendance6', FALSE, NULL, '2022-02-12', '67463956',  '750006C'),
-		('attendance7', TRUE, NULL, '2022-02-12', '67463956',  '761130M'),
-		('attendance8', FALSE, NULL, '2022-02-12', '26373945',  '750001C');
+		('attendance1', TRUE, NULL, '2022-02-12', '111023C'),
+		('attendance2', FALSE, NULL, '2022-02-12', '111048M'),
+		('attendance3', TRUE, NULL, '2022-02-12', '111051M'),
+		('attendance4', FALSE, NULL, '2022-02-12', '111051M'),
+		('attendance5', TRUE, NULL, '2022-02-12', '750006C'),
+		('attendance6', FALSE, NULL, '2022-02-12', '750006C'),
+		('attendance7', TRUE, NULL, '2022-02-12', '761130M'),
+		('attendance8', FALSE, NULL, '2022-02-12', '750001C');
 	
 INSERT INTO option_list (name)
 	VALUES
@@ -98,15 +99,15 @@ INSERT INTO option_list (name)
 		('option_list_6'),
 		('option_list_7');
 
-INSERT INTO attendance (id_test, id_course, id_student, date)
+INSERT INTO attendance (id_test, id_student, date)
 	VALUES 
-		(1, '111023C', '201744936', '2022-02-12'),
-		(7, '761130M', '202244936', '2022-03-12'),
-		(2, '111048M', '201544936', '2022-04-12'),
-		(2, '111048M', '202144936', '2022-02-12'),
-		(2, '111048M', '201744936', '2022-02-12'),
-		(5, '750006C', '201544936', '2022-01-12'),
-		(6, '750001C', '201744936', '2022-02-12');
+		(1,'201744936', '2022-02-12'),
+		(7,'202244936', '2022-03-12'),
+		(2,'201544936', '2022-04-12'),
+		(2,'202144936', '2022-02-12'),
+		(2,'201744936', '2022-02-12'),
+		(5,'201544936', '2022-01-12'),
+		(6,'201744936', '2022-02-12');
 	
 	
 INSERT INTO question (description, type, id_option_list)
@@ -123,38 +124,41 @@ INSERT INTO question (description, type, id_option_list)
 		('Enunciado10', 'close', 3),
 		('Enunciado11', 'open', NULL);
 
-INSERT INTO option (literal, id_question, description)
+INSERT INTO option (literal, id_question, description, correct)
 	VALUES 
-		('a',4,'Opcion1'),
-		('b',4,'Opcion2'),
-		('c',4,'Opcion3'),
-		('d',4, 'Opcion4'),
-		('a',6, 'Opcion5'),
-		('b',6, 'Opcion6'),
-		('c',6, 'Opcion7'),
-		('d',6, 'Opcion8'),
-		('a',7, 'Opcion9'),
-		('a',8, 'Opcion10'),
-		('b',7, 'Opcion11'),
-		('b',8, 'Opcion12'),
-		('b',9, 'Opcion13'),
-		('b',10, 'Opcion14'),
-		('a',9, 'Opcion15');
+		('a',4,'Opcion1', TRUE),
+		('b',4,'Opcion2', FALSE),
+		('c',4,'Opcion3', TRUE),
+		('d',4, 'Opcion4', FALSE),
+		('a',6, 'Opcion5', FALSE),
+		('b',6, 'Opcion6', FALSE),
+		('c',6, 'Opcion7', TRUE),
+		('d',6, 'Opcion8', FALSE),
+		('a',7, 'Opcion9', TRUE),
+		('a',8, 'Opcion10', TRUE),
+		('b',7, 'Opcion11', FALSE),
+		('b',8, 'Opcion12', FALSE),
+		('b',9, 'Opcion13', TRUE),
+		('b',10, 'Opcion14', TRUE),
+		('a',9, 'Opcion15', FALSE);
 
 
-INSERT INTO answer (date, text, option_selected, id_student, id_question)
+INSERT INTO answer_open (date, text, id_student, id_question)
 	VALUES
-		('2022-12-16 12:21:13',NULL, 1, '201744936',4),
-		('2021-12-16 12:21:13',NULL, 8, '202244936',6),
-		('2011-02-16 20:38:40',NULL, 12, '201544936', 8),
-		('2022-02-16 20:38:40',NULL, 15, '202144936',9 ),
-		('2022-02-16 20:38:40',NULL, 14, '201744936',10),
-		('2022-02-16 20:38:40',NULL, 11, '202144936',7),
-		('2022-02-16 20:38:40','Answer3', NULL, '201744936',1),
-		('2022-02-16 20:38:40','Answer4', NULL, '201544936',2),
-		('2022-02-16 20:38:40','Answer5', NULL, '201744936',3),
-		('2022-02-16 20:38:40','Answer6', NULL, '202144936',5),
-		('2022-02-16 20:38:40','Answer7', NULL, '202244936',11);
+		('2022-02-16 20:38:40','Answer3', '201744936',1),
+		('2022-02-16 20:38:40','Answer4', '201544936',2),
+		('2022-02-16 20:38:40','Answer5', '201744936',3),
+		('2022-02-16 20:38:40','Answer6', '202144936',5),
+		('2022-02-16 20:38:40','Answer7', '202244936',11);
+
+INSERT INTO answer_close (date, option_selected, id_student)
+	VALUES
+		('2022-12-16 12:21:13', 1, '201744936'),
+		('2021-12-16 12:21:13', 8, '202244936'),
+		('2011-02-16 20:38:40', 12, '201544936'),
+		('2022-02-16 20:38:40', 15, '202144936'),
+		('2022-02-16 20:38:40', 14, '201744936'),
+		('2022-02-16 20:38:40', 11, '202144936');
 
 INSERT INTO question_test(id_question, id_test)
 	VALUES
