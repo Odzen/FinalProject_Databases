@@ -148,7 +148,7 @@ CREATE TABLE attendance (
   id_test INT,
   id_student VARCHAR(30),
   date DATE NOT NULL,
-  PRIMARY KEY (id_test, id_student),
+  PRIMARY KEY (id_test, id_student, date),
   CONSTRAINT "FK_attendance.id_student"
     FOREIGN KEY (id_student)
       REFERENCES student(id_student)

@@ -81,11 +81,11 @@ INSERT INTO enrolls(id_course, id_student, date)
 INSERT INTO test (name, status, description, release_date,id_course)
 	VALUES
 		('attendance1', TRUE, NULL, '2022-02-12', '111023C'),
-		('attendance2', FALSE, NULL, '2022-02-12', '111048M'),
-		('attendance3', TRUE, NULL, '2022-02-12', '111051M'),
+		('attendance2', TRUE, NULL, '2022-02-12', '111048M'),
+		('attendance3', FALSE, NULL, '2022-02-12', '111051M'),
 		('attendance4', FALSE, NULL, '2022-02-12', '111051M'),
 		('attendance5', TRUE, NULL, '2022-02-12', '750006C'),
-		('attendance6', FALSE, NULL, '2022-02-12', '750006C'),
+		('attendance6', TRUE, NULL, '2022-02-12', '750006C'),
 		('attendance7', TRUE, NULL, '2022-02-12', '761130M'),
 		('attendance8', FALSE, NULL, '2022-02-12', '750001C');
 	
@@ -106,8 +106,7 @@ INSERT INTO attendance (id_test, id_student, date)
 		(2,'201544936', '2022-04-12'),
 		(2,'202144936', '2022-02-12'),
 		(2,'201744936', '2022-02-12'),
-		(5,'201544936', '2022-01-12'),
-		(6,'201744936', '2022-02-12');
+		(5,'201544936', '2022-01-12');
 	
 	
 INSERT INTO question (description, type, id_option_list)
