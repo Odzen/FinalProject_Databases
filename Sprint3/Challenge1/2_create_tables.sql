@@ -12,7 +12,8 @@ DROP TABLE IF EXISTS option_list CASCADE;
 DROP TABLE IF EXISTS attendance CASCADE;
 DROP TABLE IF EXISTS question CASCADE;
 DROP TABLE IF EXISTS option CASCADE;
-DROP TABLE IF EXISTS answer CASCADE;
+DROP TABLE IF EXISTS answer_open CASCADE;
+DROP TABLE IF EXISTS answer_close CASCADE;
 DROP TABLE IF EXISTS question_test CASCADE;
 
 --Table creation
@@ -111,9 +112,8 @@ CREATE TABLE course (
 CREATE TABLE enrolls (
   id_course VARCHAR(30),
   id_student VARCHAR(30),
-  id_staff VARCHAR(30),
   date DATE NOT NULL,
-  PRIMARY KEY (id_course, id_student, id_staff),
+  PRIMARY KEY (id_course, id_student),
   CONSTRAINT "FK_enrolls.id_student"
     FOREIGN KEY (id_student)
       REFERENCES student(id_student)
@@ -121,10 +121,6 @@ CREATE TABLE enrolls (
   CONSTRAINT "FK_enrolls.id_course"
     FOREIGN KEY (id_course)
       REFERENCES course(id_course)
-		ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT "FK_enrolls.id_staff"
-    FOREIGN KEY (id_staff)
-      REFERENCES staff(id_staff)
 		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
@@ -134,13 +130,8 @@ CREATE TABLE test (
   status BOOLEAN NOT NULL,
   description TEXT,
   release_date DATE NOT NULL,
-  created_by_staff VARCHAR(30),
   id_course VARCHAR(30),
   PRIMARY KEY (id_test),
-  CONSTRAINT "FK_test.created_by_staff"
-    FOREIGN KEY (created_by_staff)
-      REFERENCES staff(id_staff)
-		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_test.id_course"
     FOREIGN KEY (id_course)
       REFERENCES course(id_course)
@@ -155,17 +146,12 @@ CREATE TABLE option_list (
 
 CREATE TABLE attendance (
   id_test INT,
-  id_course VARCHAR(30),
   id_student VARCHAR(30),
   date DATE NOT NULL,
-  PRIMARY KEY (id_test, id_course, id_student),
+  PRIMARY KEY (id_test, id_student),
   CONSTRAINT "FK_attendance.id_student"
     FOREIGN KEY (id_student)
       REFERENCES student(id_student)
-		ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT "FK_attendance.id_course"
-    FOREIGN KEY (id_course)
-      REFERENCES course(id_course)
 		ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT "FK_attendance.id_test"
     FOREIGN KEY (id_test)
@@ -175,7 +161,7 @@ CREATE TABLE attendance (
 
 CREATE TABLE question (
   id_question SERIAL,
-  description TEXT,
+  description TEXT NOT NULL,
   type VARCHAR(30) NOT NULL,
   id_option_list INT,
   PRIMARY KEY (id_question),
@@ -187,9 +173,10 @@ CREATE TABLE question (
 
 CREATE TABLE option (
   id_option SERIAL,
-  literal VARCHAR(1),
+  literal VARCHAR(1) NOT NULL,
   id_question INT,
   description VARCHAR(30) NOT NULL,
+  correct BOOLEAN NOT NULL,
   PRIMARY KEY (id_option),
   CONSTRAINT "FK_option.id_question"
     FOREIGN KEY (id_question)
@@ -197,18 +184,29 @@ CREATE TABLE option (
 		ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE answer (
-  id_answer SERIAL,
+CREATE TABLE answer_close (
+  id_answer_close SERIAL,
   date TIMESTAMP,
-  text TEXT,
   option_selected INT,
   id_student VARCHAR(30),
-  id_question INT,
-  PRIMARY KEY (id_answer),
+  PRIMARY KEY (id_answer_close),
   CONSTRAINT "FK_answer.option_selected"
     FOREIGN KEY (option_selected)
       REFERENCES option(id_option)
 		ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT "FK_answer.id_student"
+    FOREIGN KEY (id_student)
+      REFERENCES student(id_student)
+		ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE answer_open (
+  id_answer_open SERIAL,
+  date TIMESTAMP,
+  text TEXT NOT NULL,
+  id_student VARCHAR(30),
+  id_question INT,
+  PRIMARY KEY (id_answer_open),
   CONSTRAINT "FK_answer.id_student"
     FOREIGN KEY (id_student)
       REFERENCES student(id_student)

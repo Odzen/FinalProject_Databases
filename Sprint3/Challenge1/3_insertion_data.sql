@@ -187,5 +187,6 @@ SELECT * from option_list;
 SELECT * from attendance;
 SELECT * from question;
 SELECT * from option;
-SELECT * from answer;
+SELECT * from answer_open;
+SELECT * from answer_close;
 SELECT * from question_test;
