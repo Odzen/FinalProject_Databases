@@ -5,9 +5,9 @@ DECLARE
 	adm VARCHAR(30):= 'admin';
 	staf VARCHAR(30):='staff';
 BEGIN 
-	IF (SELECT "@creator" IN (select id_admin from admin where id_admin="@creator"))
+	IF (SELECT "@creator" IN (select id_admin from admin where id_admin="@creator")) THEN
 		BEGIN
-			IF (NEW.user_type = adm) 
+			IF (NEW.user_type = adm)
 				THEN
 				INSERT INTO admin(id_admin,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
 			ELSIF(NEW.user_type = staf) 

@@ -164,7 +164,7 @@ INSERT INTO question_test(id_question, id_test)
 		(9,2), --close
 		(7,2), --close
 		(10,1), --close
-		(1,6), --open 
+		(1,6), --open
 		(2,5), --open
 		(3,1), --open
 		(5,2), --open
