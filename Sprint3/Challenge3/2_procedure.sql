@@ -11,7 +11,7 @@ BEGIN
 			IF (NEW.user_type = adm)THEN
 				BEGIN 
 					INSERT INTO admin(id_admin,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
-					IF((select count id_admin from admin where id_admin="@id")> 1)THEN
+					IF((select count id_admin from admin where id_admin="@id")> 0)THEN
 						ROLLBACK;
 					ELSE
 						COMMIT;
@@ -20,7 +20,7 @@ BEGIN
 			ELSIF(NEW.user_type = staf)THEN
 				BEGIN
 					INSERT INTO staff(id_staff,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
-					IF((select count id_staff from admin where id_staff="@id") > 1)THEN
+					IF((select count id_staff from admin where id_staff="@id") > 0)THEN
 						ROLLBACK;
 					ELSE
 						COMMIT;
@@ -29,7 +29,7 @@ BEGIN
 			ELSE
 				BEGIN
 					INSERT INTO student(id_student,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
-					IF((select id_staff from admin where id_staff="@id") >1)THEN
+					IF((select count id_staff from admin where id_staff="@id") >0)THEN
 						ROLLBACK;
 					ELSE
 						COMMIT;
