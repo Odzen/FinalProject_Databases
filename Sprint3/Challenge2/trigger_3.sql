@@ -1,6 +1,6 @@
 -- Trigger 3
 
--- No dejar responder un test para marcar asistencia a un curso que esta inactivo, esto lo revisamos con el campo
+-- No dejar responder un test para marcar asistencia a un curso, si el test esta inactivo, esto lo revisamos con el campo
 -- status en la relacion 'test'
 
 DROP TRIGGER IF EXISTS attendance_check ON attendance;
@@ -8,12 +8,8 @@ DROP TRIGGER IF EXISTS attendance_check ON attendance;
 CREATE OR REPLACE FUNCTION attendance_check() 
     RETURNS TRIGGER AS $attendance_check$
 BEGIN
-    IF  THEN
-		RAISE EXCEPTION '';
-	ELSIF () THEN
-		IF () THEN
-			RAISE EXCEPTION '', ;
-		END IF;
+	IF (SELECT NEW.id_test NOT IN (SELECT id_test FROM test WHERE status=TRUE AND id_test=NEW.id_test)) THEN
+		RAISE EXCEPTION 'El test con el id % no esta disponible, por eso no puede marcar asistencia', NEW.id_test;
 	ELSE
 		BEGIN
 			RETURN NEW;
@@ -49,4 +45,4 @@ CREATE TRIGGER attendance_check BEFORE INSERT OR UPDATE
 -- 		(2,'201744936', '2022-03-12');
 
 	
---SELECT * FROM attendance;
+-- SELECT * FROM attendance;
