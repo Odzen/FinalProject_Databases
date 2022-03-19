@@ -8,14 +8,33 @@ DECLARE
 BEGIN 
 	IF (SELECT "@creator" IN (select id_admin from admin where id_admin="@creator")) THEN
 		BEGIN
-			IF (NEW.user_type = adm)
-				THEN
-				INSERT INTO admin(id_admin,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
-			ELSIF(NEW.user_type = staf) 
-				THEN
-				INSERT INTO staff(id_staff,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+			IF (NEW.user_type = adm)THEN
+				BEGIN 
+					INSERT INTO admin(id_admin,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+					IF(SELECT "@id" IN (select id_admin from admin where id_admin="@id"))THEN
+						ROLLBACK;
+					ELSE
+						COMMIT;
+					END IF;
+				END;
+			ELSIF(NEW.user_type = staf)THEN
+				BEGIN
+					INSERT INTO staff(id_staff,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+					IF(SELECT "@id" IN (select id_staff from admin where id_staff="@id"))THEN
+						ROLLBACK;
+					ELSE
+						COMMIT;
+					END IF;
+				END;
 			ELSE
-				INSERT INTO student(id_student,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+				BEGIN
+					INSERT INTO student(id_student,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+					IF(SELECT "@id" IN (select id_staff from admin where id_staff="@id"))THEN
+						ROLLBACK;
+					ELSE
+						COMMIT;
+					END IF;
+				END;
 			END IF;
 		END;
 	ELSE

@@ -8,7 +8,10 @@ BEGIN
 	IF (SELECT "@creator" IN (select id_admin from admin where id_admin="@creator"))
 		BEGIN
 			IF(NEW.user_type = adm) THEN
-				INSERT INTO admin(id_admin,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+				BEGIN
+					IF()
+					INSERT INTO admin(id_admin,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
+				END;
 			ELSIF(NEW.user_type = staf) THEN
 				INSERT INTO staff(id_staff,id_user,created_by_admin) VALUES ("@id",NEW.id_user,"@creator");
 			ELSE
