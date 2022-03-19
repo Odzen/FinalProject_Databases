@@ -75,7 +75,6 @@ INSERT INTO enrolls(id_course, id_student, date)
 		('111048M', '201544936', '2016-02-12'),
 		('111048M', '202144936', '2022-02-12'),
 		('750006C', '201544936', '2020-02-12'),
-		('106012C', '202144936', '2022-02-12'),
 		('750001C', '201744936', '2022-02-12');
 	
 INSERT INTO test (name, status, description, release_date,id_course)

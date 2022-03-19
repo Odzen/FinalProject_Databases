@@ -1,5 +1,5 @@
 -- Trigger 1
--- Una option esta asociada a una pregunta si y solo si esta pregunta es de tipo cerrada. Ademas se tiene que verificar 
+-- Una opcion esta asociada a una pregunta si y solo si esta pregunta es de tipo cerrada. Ademas se tiene que verificar 
 -- que el literal se inserte o se quiera actualizar solo si este literal no esta asociado antes con una pregunta
 
 DROP TRIGGER IF EXISTS option_check ON option;
