@@ -4,7 +4,7 @@
 
 DROP TRIGGER IF EXISTS option_check ON option;
 
-CREATE OR REPLACE FUNCTION option_check() 
+CREATE OR REPLACE FUNCTION option_check()
     RETURNS TRIGGER AS $option_check$
 BEGIN
 	-- Certifica que la pregunta sea cerrada
@@ -61,4 +61,4 @@ CREATE TRIGGER option_check BEFORE INSERT OR UPDATE
 -- INSERT INTO option (literal, id_question, description, correct)
 -- 	VALUES ('f', 6, 'OpcionN', FALSE);
 
--- SELECT * FROM option;
+--SELECT * FROM option;
